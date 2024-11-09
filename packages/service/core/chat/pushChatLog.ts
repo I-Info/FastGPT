@@ -119,6 +119,8 @@ const pushChatLogInternal = async ({
     responseTime += item.runningTime;
   });
 
+  const sourceIdPrefix = process.env.SOURCE_ID_PREFIX ?? '';
+
   const chatLog: ChatLog = {
     title: chat.title,
     feedback: (() => {
@@ -139,7 +141,7 @@ const pushChatLogInternal = async ({
     metadata: metadataString,
     sourceName: chat.source ?? '-',
     createdAt: new Date(chatItemAi.time).getTime(),
-    sourceId: `crbeer-fastgpt-${appId}`
+    sourceId: `${sourceIdPrefix}${appId}`
   };
   await axios
     .post(url + '/api/chat/push', chatLog)
